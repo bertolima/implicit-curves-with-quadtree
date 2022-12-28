@@ -10,13 +10,13 @@ if __name__ == "__main__":
     width = 512
     height = 512
     #vector that contains the implicit functions
-    funcoes = Vetor(12)
+    funcoes = []
     funcList(funcoes)
 
     #if didn't got parameter, will initialize with depth 8
     try:
         depth = int((sys.argv[1])) #controls max tree depth
     except:
-        depth = 8
+        depth = 7
     
     x = window(depth, funcoes, width, height)

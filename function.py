@@ -37,16 +37,16 @@ def f12(x,y):
     return (3*x**2-y**2)*y**2-(x**2+y**2)**4
 
 def funcList(funcao):
-    funcao.inserir(f1)
-    funcao.inserir(f2)
-    funcao.inserir(f3)
-    funcao.inserir(f4)
-    funcao.inserir(f5)
-    funcao.inserir(f6)
-    funcao.inserir(f7)
-    funcao.inserir(f8)
-    funcao.inserir(f9)
-    funcao.inserir(f10)
-    funcao.inserir(f11)
-    funcao.inserir(f12)
+    funcao.append(f1)
+    funcao.append(f2)
+    funcao.append(f3)
+    funcao.append(f4)
+    funcao.append(f5)
+    funcao.append(f6)
+    funcao.append(f7)
+    funcao.append(f8)
+    funcao.append(f9)
+    funcao.append(f10)
+    funcao.append(f11)
+    funcao.append(f12)
 

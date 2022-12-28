@@ -1,7 +1,7 @@
 from pyglet import shapes
 
 class Retangulo:
-    def __init__(self, codX, codY, tamanho, width, batch = None):
+    def __init__(self, codX, codY, tamanho, width):
         #atributos bases de um retangulo: altura, largura, as coordenadas de onde serão posicionados e o batch é necessário para posterior utilização do pyglet de forma mais otimizada
         #o type é também uma variavel de controle relacionada a parte visual, pode ser definido como "inCurve" ou "outCurve", que diz se o retangulo em questao está pra dentro ou pra fora
         #da curva
@@ -9,7 +9,6 @@ class Retangulo:
         self.largura = tamanho
         self.codX = codX
         self.codY = codY
-        self.batch = batch
         self.type = None
         self.width = width/2 #utilizado para converter as coordenadas pixel p cartesianas
         self.ratio = 8/width #fator de conversão de coordenadas pixel para as cartesianas
@@ -20,18 +19,8 @@ class Retangulo:
         self.baixo = codY-self.altura/2
         self.cima = codY+self.altura/2
         
-    def getRet(self):
-        #esse método retorna um retangulo propriamente do pyglet, caso seja inCurve ou outCurve, é retornado um retangulo comum, podendo este ser vermelho ou azul.
-        if self.type == "inCurve":
-            ponto = shapes.Rectangle(self.codX, self.codY, self.altura, self.largura, color=(0, 0, 255), batch=self.batch)
-            ponto.anchor_position = self.altura/2, self.altura/2
-            return ponto
-        elif self.type == "outCurve":
-            ponto = shapes.Rectangle(self.codX, self.codY, self.altura, self.largura, color=(255, 0, 0), batch=self.batch)
-            ponto.anchor_position = self.altura/2, self.altura/2
-            return ponto
-        #caso o type seja None, o retangulo retornado é um vazio com bordas brancas.
-        ponto = shapes.BorderedRectangle(self.codX, self.codY, self.altura, self.largura,border=1, color=(0, 0, 0), border_color=(255,255,255), batch=self.batch)
+    def getRet(self, batch):
+        ponto = shapes.BorderedRectangle(self.codX, self.codY, self.altura, self.largura,border=1, color=(0, 0, 0), border_color=(255,255,255), batch=batch)
         ponto.anchor_position = self.altura/2, self.altura/2 
         return ponto
 
