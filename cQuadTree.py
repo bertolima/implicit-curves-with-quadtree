@@ -53,6 +53,7 @@ class quadTree:
             if quadtree.sulEsq.retangulo.contemPonto(self.funcao):
                 quadtree.plotTree(quadtree.sulEsq)
 
+
     def showFull(self, quadtree, batch):
 
         if quadtree.norteEsq == None and quadtree.norteDir == None and quadtree.sulDir == None and quadtree.sulEsq == None:
@@ -73,58 +74,36 @@ class quadTree:
 
 
 
-    # def showCurve(self, quadtree):
+    def showCurve(self, quadtree, batch):
 
-    #     if quadtree.profundidade == quadtree.profundidade_max:
-    #         self.shapeList.append(quadtree.retangulo.getRet())
-    #         return
+        if quadtree.profundidade == quadtree.profundidade_max:
+            self.shapeList.append(quadtree.retangulo.getRet(batch))
+            return
 
-    #     if quadtree.retangulo.contemPonto(self.funcao):
-    #         quadtree.divisao(quadtree)
+        if quadtree.dividido:
+            quadtree.showCurve(quadtree.norteEsq, batch)
+            quadtree.showCurve(quadtree.norteDir, batch)
+            quadtree.showCurve(quadtree.sulDir, batch)
+            quadtree.showCurve(quadtree.sulEsq, batch)
 
-    #     if quadtree.dividido:
+    def showHalf(self, quadtree, batch):
 
-    #         if quadtree.norteEsq.retangulo.contemPonto(self.funcao):
-    #             quadtree.showCurve(quadtree.norteEsq)
-    #         if quadtree.norteDir.retangulo.contemPonto(self.funcao):
-    #             quadtree.showCurve(quadtree.norteDir)
-    #         if quadtree.sulDir.retangulo.contemPonto(self.funcao):
-    #             quadtree.showCurve(quadtree.sulDir)
-    #         if quadtree.sulEsq.retangulo.contemPonto(self.funcao):
-    #             quadtree.showCurve(quadtree.sulEsq)
+        if quadtree.norteEsq == None and quadtree.norteDir == None and quadtree.sulDir == None and quadtree.sulEsq == None:
+            return
+        quadtree.retangulo.getType(quadtree.retangulo, self.funcao)
+        self.shapeList.append(quadtree.retangulo.getRet(batch))
 
-    # def showHalf(self, quadtree):
+        if self.dividido:
+            quadtree.norteEsq.retangulo.getType(quadtree.norteEsq.retangulo, self.funcao)
+            self.shapeList.append(quadtree.norteEsq.retangulo.getRet(batch))
+            quadtree.norteEsq.retangulo.getType(quadtree.norteEsq.retangulo, self.funcao)
+            self.shapeList.append(quadtree.norteDir.retangulo.getRet(batch))
+            quadtree.norteEsq.retangulo.getType(quadtree.norteEsq.retangulo, self.funcao)
+            self.shapeList.append(quadtree.sulDir.retangulo.getRet(batch))
+            quadtree.norteEsq.retangulo.getType(quadtree.norteEsq.retangulo, self.funcao)
+            self.shapeList.append(quadtree.sulEsq.retangulo.getRet(batch))
 
-    #     if quadtree.profundidade == quadtree.profundidade_max:
-    #         quadtree.retangulo.getType(self.funcao)
-    #         self.shapeList.append(quadtree.retangulo.getRet())
-    #         return
-    #     if quadtree.retangulo.contemPonto(self.funcao):
-    #         self.shapeList.append(quadtree.retangulo.getRet())
-    #         quadtree.divisao(quadtree)
-
-    #     if quadtree.dividido:
-
-    #         if quadtree.norteEsq.retangulo.contemPonto(self.funcao):
-    #             quadtree.showHalf(quadtree.norteEsq)
-    #         else:
-    #             quadtree.norteEsq.retangulo.getType(self.funcao)
-    #             self.shapeList.append(quadtree.norteEsq.retangulo.getRet())
-
-    #         if quadtree.norteDir.retangulo.contemPonto(self.funcao):
-    #             quadtree.showHalf(quadtree.norteDir)
-    #         else:
-    #             quadtree.norteDir.retangulo.getType(self.funcao)
-    #             self.shapeList.append(quadtree.norteDir.retangulo.getRet())
-
-    #         if quadtree.sulDir.retangulo.contemPonto(self.funcao):
-    #             quadtree.showHalf(quadtree.sulDir)
-    #         else:
-    #             quadtree.sulDir.retangulo.getType(self.funcao)
-    #             self.shapeList.append(quadtree.sulDir.retangulo.getRet())
-
-    #         if quadtree.sulEsq.retangulo.contemPonto(self.funcao):
-    #             quadtree.showHalf(quadtree.sulEsq)
-    #         else:
-    #             quadtree.sulEsq.retangulo.getType(self.funcao)
-    #             self.shapeList.append(quadtree.sulEsq.retangulo.getRet())
+            quadtree.showHalf(quadtree.norteEsq, batch)
+            quadtree.showHalf(quadtree.norteDir, batch)
+            quadtree.showHalf(quadtree.sulDir, batch)
+            quadtree.showHalf(quadtree.sulEsq, batch)

@@ -18,25 +18,35 @@ class Retangulo:
         self.dir = codX+self.largura/2
         self.baixo = codY-self.altura/2
         self.cima = codY+self.altura/2
+        self.type = None
         
     def getRet(self, batch):
-        ponto = shapes.BorderedRectangle(self.codX, self.codY, self.altura, self.largura,border=1, color=(0, 0, 0), border_color=(255,255,255), batch=batch)
-        ponto.anchor_position = self.altura/2, self.altura/2 
+
+        if self.type is None:
+            ponto = shapes.BorderedRectangle(self.codX, self.codY, self.altura, self.largura,border=1, color=(0, 0, 0), border_color=(255,255,255), batch=batch)
+            ponto.anchor_position = self.altura/2, self.altura/2
+        elif self.type == "inCurve":
+            ponto = shapes.Rectangle(self.codX, self.codY, self.altura, self.largura, color=(0, 0, 255), batch=batch)
+            ponto.anchor_position = self.altura/2, self.altura/2 
+        elif self.type == "outCurve":
+            ponto = shapes.Rectangle(self.codX, self.codY, self.altura, self.largura, color=(255, 0, 0), batch=batch)
+            ponto.anchor_position = self.altura/2, self.altura/2
+             
         return ponto
 
-    def getType(self, function):
+    def getType(self, retangulo, function):
         #esse metodo julga qual o type do retangulo em questao, note que caso esse metodo seja chamado, é impossivel que o retangulo seja type=None
-        cimaEsq =  function(self.ratio*(self.esq-self.width), self.ratio*(self.cima-self.width))
-        cimaDir =  function(self.ratio*(self.dir-self.width), self.ratio*(self.cima-self.width))
-        baixoEsq = function(self.ratio*(self.esq-self.width), self.ratio*(self.baixo-self.width))
-        baixoDir = function(self.ratio*(self.dir-self.width), self.ratio*(self.baixo-self.width))
+        cimaEsq =  function(retangulo.ratio*(retangulo.esq-retangulo.width), retangulo.ratio*(retangulo.cima-retangulo.width))
+        cimaDir =  function(retangulo.ratio*(retangulo.dir-retangulo.width), retangulo.ratio*(retangulo.cima-retangulo.width))
+        baixoEsq = function(retangulo.ratio*(retangulo.esq-retangulo.width), retangulo.ratio*(retangulo.baixo-retangulo.width))
+        baixoDir = function(retangulo.ratio*(retangulo.dir-retangulo.width), retangulo.ratio*(retangulo.baixo-retangulo.width))
 
         if cimaEsq > 0 and cimaDir > 0 and baixoEsq > 0 and baixoDir > 0:
-            self.type = "inCurve"
+            retangulo.type = "inCurve"
             return
         elif cimaEsq < 0 and cimaDir < 0 and baixoEsq < 0 and baixoDir < 0:
-            self.type = "outCurve"
-        self.type = "outCurve"
+            retangulo.type = "outCurve"
+        retangulo.type = "outCurve"
 
     def contemPonto(self, function):
         #esse metodo julga se a curva passa pelo retangulo em questao, as coordenadas X e Y dos 4 pontos do retangulo sao submetidas a equação implicita e, caso haja

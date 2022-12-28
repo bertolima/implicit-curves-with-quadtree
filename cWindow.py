@@ -16,6 +16,8 @@ class window:
         
         #variaveis de controle
         self.drawFull = False
+        self.drawCurve = False
+        self.drawHalf = False
         self.numero = -1
 
         def on_key_press(key, modifiers): 
@@ -29,23 +31,38 @@ class window:
                     self.numero = 0
 
                 self.drawFull = False
+                self.drawCurve = False
+                self.drawHalf = False
 
                 #criamos as TADs necessárias e atribuimos as variaveis
                 self.ret = Retangulo(width/2, width/2, height, width)   
                 self.arvore = quadTree(self.ret, self.depth, self.funcoes[self.numero], width)
        
-
-            # G é responsável pela exibição da TAD em todos os seus níveis                
+             
             if key == pyglet.window.key.G:
                 self.batchG = pyglet.graphics.Batch()
                 self.arvore.showFull(self.arvore, self.batchG)
                 self.drawFull = True
+
+            if key == pyglet.window.key.Q:
+                self.batchG = pyglet.graphics.Batch()
+                self.arvore.showCurve(self.arvore, self.batchG)
+                self.drawCurve = True
+
+            if key == pyglet.window.key.R:
+                self.batchG = pyglet.graphics.Batch()
+                self.arvore.showHalf(self.arvore, self.batchG)
+                self.drawHalf = True
 
 
 
         def on_draw():
             window.clear()
             if self.drawFull:
+                self.batchG.draw()
+            elif self.drawCurve:
+                self.batchG.draw()
+            elif self.drawHalf:
                 self.batchG.draw()
 
 

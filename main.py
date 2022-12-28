@@ -17,6 +17,6 @@ if __name__ == "__main__":
     try:
         depth = int((sys.argv[1])) #controls max tree depth
     except:
-        depth = 7
+        depth = 9
     
     x = window(depth, funcoes, width, height)
