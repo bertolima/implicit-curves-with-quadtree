@@ -1,4 +1,4 @@
-#modulo que contém as funções de todas as curvas implicitas da aplicação.
+# modulo que contém as funções de todas as curvas implicitas da aplicação.
 
 def f1(x,y):
     return x**3+y-4
@@ -49,4 +49,3 @@ def funcList(funcao):
     funcao.append(f10)
     funcao.append(f11)
     funcao.append(f12)
-

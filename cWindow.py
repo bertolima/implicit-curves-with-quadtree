@@ -5,8 +5,8 @@ import pyglet
 class window:
 
     def __init__(self, depth, funcoes, width, height, legenda="Visualizar Curva Implícita"):
-        self.funcoes = funcoes      #recebe todas as equações implicitas
-        self.depth = depth          #recebe a pronfudidade maxima da árvore       
+        self.funcoes = funcoes      #receive implicit functions
+        self.depth = depth          #receive max tree depth     
 
         self.batchG = None
         self.batchQ = None
@@ -15,16 +15,16 @@ class window:
         self.ret = None                         
         self.arvore = None         
         
-        #variaveis de controle
         self.drawFull = False
         self.drawCurve = False
         self.drawHalf = False
-
-        self.funcVal = -1
-
         self.lockG = False
         self.lockQ = False
         self.lockR = False
+        self.lockGen = False
+        self.lockChange = False
+
+        self.funcVal = -1
 
         def pressG():
             if self.drawFull:
@@ -83,49 +83,59 @@ class window:
                 self.ret = Retangulo(width/2, width/2, height, width)   
                 self.arvore = quadTree(self.ret, self.depth, self.funcoes[self.funcVal], width)
                 self.arvore.plotTree(self.arvore)
+                self.lockGen = True
+                self.lockChange = False
        
-             
             if key == pyglet.window.key.G:
-                pressG()
+                if self.lockGen:
+                    pressG()
+                    self.lockChange = True
 
             if key == pyglet.window.key.Q:
-                pressQ()
+                if self.lockGen:
+                    pressQ()
+                    self.lockChange = True
 
             if key == pyglet.window.key.R:
-                pressR()
+                if self.lockGen:
+                    pressR()
+                    self.lockChange = True
 
             if key == pyglet.window.key.X:
-                self.depth -= 1
-                self.arvore.subDepth(self.arvore, self.depth)
-                if self.drawFull:
-                    self.drawFull = False
-                    self.lockG = False
-                    pressG()
-                elif self.drawCurve:
-                    self.drawCurve = False
-                    self.lockQ = False
-                    pressQ()
-                elif self.drawHalf:
-                    self.drawHalf = False
-                    self.lockR = False
-                    pressR()
-                    
-            if key == pyglet.window.key.Z:
-                self.depth += 1
-                self.arvore.addDepth(self.arvore, self.depth)
-                if self.drawFull:
-                    self.drawFull = False
-                    self.lockG = False
-                    pressG()
-                elif self.drawCurve:
-                    self.drawCurve = False
-                    self.lockQ = False
-                    pressQ()
-                elif self.drawHalf:
-                    self.drawHalf = False
-                    self.lockR = False
-                    pressR()
+                if self.lockChange:
+                    if self.depth > 0:
+                        self.depth -= 1
+                        self.arvore.subDepth(self.arvore, self.depth)
+                        if self.drawFull:
+                            self.drawFull = False
+                            self.lockG = False
+                            pressG()
+                        elif self.drawCurve:
+                            self.drawCurve = False
+                            self.lockQ = False
+                            pressQ()
+                        elif self.drawHalf:
+                            self.drawHalf = False
+                            self.lockR = False
+                            pressR()
 
+            if key == pyglet.window.key.Z:
+                if self.lockChange:
+                    if self.depth < 10:
+                        self.depth += 1
+                        self.arvore.addDepth(self.arvore, self.depth)
+                        if self.drawFull:
+                            self.drawFull = False
+                            self.lockG = False
+                            pressG()
+                        elif self.drawCurve:
+                            self.drawCurve = False
+                            self.lockQ = False
+                            pressQ()
+                        elif self.drawHalf:
+                            self.drawHalf = False
+                            self.lockR = False
+                            pressR()
 
         def on_draw():
             window.clear()
@@ -136,9 +146,7 @@ class window:
             elif self.drawHalf:
                 self.batchR.draw()
 
-
         window = pyglet.window.Window(width, height, legenda)
         window.push_handlers(on_draw)
         window.push_handlers(on_key_press)
-
         pyglet.app.run()

@@ -1,10 +1,7 @@
 from cRetangulo import Retangulo
-from cVetor import Vetor
-import pyglet
 
 class quadTree:
     def __init__(self, retangulo, profundidade_max, funcao, width, profundidade=0):
-
         self.funcao = funcao
         self.profundidade = profundidade
         self.retangulo = retangulo
@@ -19,9 +16,7 @@ class quadTree:
         self.sulDir = None
         self.sulEsq = None
 
-
     def divisao(self, quadtree):
-
         codX, codY = quadtree.retangulo.codX, quadtree.retangulo.codY
         altura, largura = quadtree.retangulo.altura/2, quadtree.retangulo.largura/2
 
@@ -34,7 +29,6 @@ class quadTree:
 
 
     def plotTree(self, quadtree):
-
         if quadtree.profundidade == quadtree.profundidade_max:
             return
         if quadtree.retangulo.contemPonto(self.funcao):
@@ -53,7 +47,6 @@ class quadTree:
 
 
     def showFull(self, quadtree, batch):
-
         if quadtree.norteEsq == None and quadtree.norteDir == None and quadtree.sulDir == None and quadtree.sulEsq == None:
             return
 
@@ -71,7 +64,6 @@ class quadTree:
             quadtree.showFull(quadtree.sulEsq, batch)
 
     def showCurve(self, quadtree, batch):
-        
             if quadtree.profundidade == quadtree.profundidade_max:
                 self.shapeList.append(quadtree.retangulo.getRet(batch))
                 return
@@ -83,7 +75,6 @@ class quadTree:
                 quadtree.showCurve(quadtree.sulEsq, batch)
 
     def showHalf(self, quadtree, batch):
-
         if quadtree.norteEsq == None and quadtree.norteDir == None and quadtree.sulDir == None and quadtree.sulEsq == None:
             return
         quadtree.retangulo.getType(quadtree.retangulo, self.funcao)
