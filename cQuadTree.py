@@ -71,16 +71,16 @@ class quadTree:
             quadtree.showFull(quadtree.sulEsq, batch)
 
     def showCurve(self, quadtree, batch):
+        
+            if quadtree.profundidade == quadtree.profundidade_max:
+                self.shapeList.append(quadtree.retangulo.getRet(batch))
+                return
 
-        if quadtree.profundidade == quadtree.profundidade_max:
-            self.shapeList.append(quadtree.retangulo.getRet(batch))
-            return
-
-        if quadtree.dividido:
-            quadtree.showCurve(quadtree.norteEsq, batch)
-            quadtree.showCurve(quadtree.norteDir, batch)
-            quadtree.showCurve(quadtree.sulDir, batch)
-            quadtree.showCurve(quadtree.sulEsq, batch)
+            if quadtree.dividido:
+                quadtree.showCurve(quadtree.norteEsq, batch)
+                quadtree.showCurve(quadtree.norteDir, batch)
+                quadtree.showCurve(quadtree.sulDir, batch)
+                quadtree.showCurve(quadtree.sulEsq, batch)
 
     def showHalf(self, quadtree, batch):
 
@@ -104,18 +104,39 @@ class quadTree:
             quadtree.showHalf(quadtree.sulDir, batch)
             quadtree.showHalf(quadtree.sulEsq, batch)
 
-    def delDepth(self, quadtree, depth):
-        
+    def subDepth(self, quadtree, depth):
+        quadtree.profundidade_max -= 1
         if quadtree.profundidade == depth:
             quadtree.norteEsq = None
             quadtree.norteDir = None
             quadtree.sulDir = None
-            quadtree.sulEsq = None
-            
+            quadtree.sulEsq = None  
             return
         if quadtree.dividido:   
-            quadtree.delDepth(quadtree.norteEsq, depth)
-            quadtree.delDepth(quadtree.norteDir, depth)
-            quadtree.delDepth(quadtree.sulDir, depth)
-            quadtree.delDepth(quadtree.sulEsq, depth)
+            quadtree.subDepth(quadtree.norteEsq, depth)
+            quadtree.subDepth(quadtree.norteDir, depth)
+            quadtree.subDepth(quadtree.sulDir, depth)
+            quadtree.subDepth(quadtree.sulEsq, depth)
+    
+    def addDepth(self, quadtree, depth):
+        if quadtree.profundidade_max < depth:
+            quadtree.profundidade_max += 1
+
+        if quadtree.profundidade == depth:
+            return
+        if quadtree.profundidade == depth-1:
+            if quadtree.retangulo.contemPonto(self.funcao):
+                quadtree.divisao(quadtree)
+
+        if quadtree.dividido:
+            if quadtree.norteEsq.retangulo.contemPonto(self.funcao):
+                quadtree.addDepth(quadtree.norteEsq, depth)
+            if quadtree.norteDir.retangulo.contemPonto(self.funcao):
+                quadtree.addDepth(quadtree.norteDir, depth)
+            if quadtree.sulDir.retangulo.contemPonto(self.funcao):
+                quadtree.addDepth(quadtree.sulDir, depth)
+            if quadtree.sulEsq.retangulo.contemPonto(self.funcao):
+                quadtree.addDepth(quadtree.sulEsq, depth)
+            
+
 
