@@ -22,17 +22,21 @@ class Retangulo:
         
     def getRet(self, batch):
 
-        if self.type is None:
-            ponto = shapes.BorderedRectangle(self.codX, self.codY, self.altura, self.largura,border=1, color=(0, 0, 0), border_color=(255,255,255), batch=batch)
-            ponto.anchor_position = self.altura/2, self.altura/2
-        elif self.type == "inCurve":
+        ponto = shapes.BorderedRectangle(self.codX, self.codY, self.altura, self.largura,border=1, color=(0, 0, 0), border_color=(255,255,255), batch=batch)
+        ponto.anchor_position = self.altura/2, self.altura/2
+        return ponto
+
+    def colorRet(self, batch):
+        if self.type == "inCurve":
             ponto = shapes.Rectangle(self.codX, self.codY, self.altura, self.largura, color=(0, 0, 255), batch=batch)
-            ponto.anchor_position = self.altura/2, self.altura/2 
+            ponto.anchor_position = self.altura/2, self.altura/2
+            return ponto
         elif self.type == "outCurve":
             ponto = shapes.Rectangle(self.codX, self.codY, self.altura, self.largura, color=(255, 0, 0), batch=batch)
             ponto.anchor_position = self.altura/2, self.altura/2
-             
-        return ponto
+            return ponto
+        
+        
 
     def getType(self, retangulo, function):
         #esse metodo julga qual o type do retangulo em questao, note que caso esse metodo seja chamado, é impossivel que o retangulo seja type=None
@@ -46,6 +50,7 @@ class Retangulo:
             return
         elif cimaEsq < 0 and cimaDir < 0 and baixoEsq < 0 and baixoDir < 0:
             retangulo.type = "outCurve"
+            return
         retangulo.type = "outCurve"
 
     def contemPonto(self, function):

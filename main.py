@@ -13,7 +13,7 @@ if __name__ == "__main__":
     funcoes = []
     funcList(funcoes)
 
-    #if didn't got parameter, will initialize with depth 8
+    #if didn't got parameter, will initialize with depth 9
     try:
         depth = int((sys.argv[1])) #controls max tree depth
     except:

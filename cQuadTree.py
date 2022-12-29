@@ -11,7 +11,6 @@ class quadTree:
         self.profundidade_max = profundidade_max
         self.shapeList = []
         self.width = width
-        
 
         self.dividido = False       
 
@@ -72,8 +71,6 @@ class quadTree:
             quadtree.showFull(quadtree.sulDir, batch)
             quadtree.showFull(quadtree.sulEsq, batch)
 
-
-
     def showCurve(self, quadtree, batch):
 
         if quadtree.profundidade == quadtree.profundidade_max:
@@ -91,19 +88,24 @@ class quadTree:
         if quadtree.norteEsq == None and quadtree.norteDir == None and quadtree.sulDir == None and quadtree.sulEsq == None:
             return
         quadtree.retangulo.getType(quadtree.retangulo, self.funcao)
-        self.shapeList.append(quadtree.retangulo.getRet(batch))
+        self.shapeList.append(quadtree.retangulo.colorRet(batch))
 
         if self.dividido:
             quadtree.norteEsq.retangulo.getType(quadtree.norteEsq.retangulo, self.funcao)
-            self.shapeList.append(quadtree.norteEsq.retangulo.getRet(batch))
+            self.shapeList.append(quadtree.norteEsq.retangulo.colorRet(batch))
             quadtree.norteEsq.retangulo.getType(quadtree.norteEsq.retangulo, self.funcao)
-            self.shapeList.append(quadtree.norteDir.retangulo.getRet(batch))
+            self.shapeList.append(quadtree.norteDir.retangulo.colorRet(batch))
             quadtree.norteEsq.retangulo.getType(quadtree.norteEsq.retangulo, self.funcao)
-            self.shapeList.append(quadtree.sulDir.retangulo.getRet(batch))
+            self.shapeList.append(quadtree.sulDir.retangulo.colorRet(batch))
             quadtree.norteEsq.retangulo.getType(quadtree.norteEsq.retangulo, self.funcao)
-            self.shapeList.append(quadtree.sulEsq.retangulo.getRet(batch))
+            self.shapeList.append(quadtree.sulEsq.retangulo.colorRet(batch))
 
             quadtree.showHalf(quadtree.norteEsq, batch)
             quadtree.showHalf(quadtree.norteDir, batch)
             quadtree.showHalf(quadtree.sulDir, batch)
             quadtree.showHalf(quadtree.sulEsq, batch)
+
+    def delDepth(self, quadtree, depth):
+        if quadtree.profundidade == depth:
+            del quadtree
+            return
