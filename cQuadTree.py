@@ -119,24 +119,17 @@ class quadTree:
             quadtree.subDepth(quadtree.sulEsq, depth)
     
     def addDepth(self, quadtree, depth):
-        if quadtree.profundidade_max < depth:
-            quadtree.profundidade_max += 1
-
-        if quadtree.profundidade == depth:
-            return
+        quadtree.profundidade_max += 1
         if quadtree.profundidade == depth-1:
             if quadtree.retangulo.contemPonto(self.funcao):
                 quadtree.divisao(quadtree)
+            return
 
         if quadtree.dividido:
-            if quadtree.norteEsq.retangulo.contemPonto(self.funcao):
-                quadtree.addDepth(quadtree.norteEsq, depth)
-            if quadtree.norteDir.retangulo.contemPonto(self.funcao):
-                quadtree.addDepth(quadtree.norteDir, depth)
-            if quadtree.sulDir.retangulo.contemPonto(self.funcao):
-                quadtree.addDepth(quadtree.sulDir, depth)
-            if quadtree.sulEsq.retangulo.contemPonto(self.funcao):
-                quadtree.addDepth(quadtree.sulEsq, depth)
+            quadtree.addDepth(quadtree.norteEsq, depth)
+            quadtree.addDepth(quadtree.norteDir, depth)
+            quadtree.addDepth(quadtree.sulDir, depth)
+            quadtree.addDepth(quadtree.sulEsq, depth)
             
 
 
