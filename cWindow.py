@@ -7,6 +7,7 @@ class window:
     def __init__(self, depth, funcoes, width, height, legenda="Visualizar Curva Implícita"):
         self.funcoes = funcoes      #recebe todas as equações implicitas
         self.depth = depth          #recebe a pronfudidade maxima da árvore
+        self.nowDepth = depth         
 
         self.batchG = None
         self.batchQ = None
@@ -84,6 +85,7 @@ class window:
                 #criamos as TADs necessárias e atribuimos as variaveis
                 self.ret = Retangulo(width/2, width/2, height, width)   
                 self.arvore = quadTree(self.ret, self.depth, self.funcoes[self.funcVal], width)
+                self.arvore.plotTree(self.arvore)
        
              
             if key == pyglet.window.key.G:
@@ -96,14 +98,8 @@ class window:
                 pressR()
 
             if key == pyglet.window.key.X:
-                
-                self.drawCurve = False
-                self.drawHalf = False
-                
-                self.lockQ = False
-                self.lockR = False
-
-                self.arvore.delDepth(self.arvore, self.funcVal)
+                self.nowDepth -= 1
+                self.arvore.delDepth(self.arvore, self.nowDepth)
                 if self.drawFull:
                     self.drawFull = False
                     self.lockG = False

@@ -19,7 +19,6 @@ class quadTree:
         self.sulDir = None
         self.sulEsq = None
 
-        self.plotTree(self)
 
     def divisao(self, quadtree):
 
@@ -106,6 +105,17 @@ class quadTree:
             quadtree.showHalf(quadtree.sulEsq, batch)
 
     def delDepth(self, quadtree, depth):
+        
         if quadtree.profundidade == depth:
-            del quadtree
+            quadtree.norteEsq = None
+            quadtree.norteDir = None
+            quadtree.sulDir = None
+            quadtree.sulEsq = None
+            
             return
+        if quadtree.dividido:   
+            quadtree.delDepth(quadtree.norteEsq, depth)
+            quadtree.delDepth(quadtree.norteDir, depth)
+            quadtree.delDepth(quadtree.sulDir, depth)
+            quadtree.delDepth(quadtree.sulEsq, depth)
+
