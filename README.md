@@ -54,6 +54,7 @@ Shamshad, **Quadtree Algorithm for Implicit Curve Drawing**.http://shamshad-npti
 
 K.G Suffern,**Quadtree Algorithms for Contouring Functions of Two Variables**.https://academic.oup.com/comjnl/article/33/5/402/480353
 
+## 
 
 :us:
 # Visualization of Implicit Curves
