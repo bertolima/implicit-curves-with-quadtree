@@ -86,7 +86,7 @@ class window:
                 self.lockGen = True
                 self.lockChange = False
        
-            if key == pyglet.window.key.G:
+            if key == pyglet.window.key.W:
                 if self.lockGen:
                     pressG()
                     self.lockChange = True
@@ -96,12 +96,12 @@ class window:
                     pressQ()
                     self.lockChange = True
 
-            if key == pyglet.window.key.R:
+            if key == pyglet.window.key.E:
                 if self.lockGen:
                     pressR()
                     self.lockChange = True
 
-            if key == pyglet.window.key.X:
+            if key == pyglet.window.key.Z:
                 if self.lockChange:
                     if self.depth > 0:
                         self.depth -= 1
@@ -119,7 +119,7 @@ class window:
                             self.lockR = False
                             pressR()
 
-            if key == pyglet.window.key.Z:
+            if key == pyglet.window.key.X:
                 if self.lockChange:
                     if self.depth < 10:
                         self.depth += 1
